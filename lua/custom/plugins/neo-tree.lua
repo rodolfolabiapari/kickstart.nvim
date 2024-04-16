@@ -11,8 +11,8 @@ return {
     '3rd/image.nvim',
   },
   config = function()
-    -- Show navavigation bar with C-n
-    vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left toggle=true reveal=true<CR>', { desc = '[N]avigation Bar' })
+    -- vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left toggle=true reveal=true<CR>', { desc = '[N]avigation Bar' })
+    vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left<CR>', { desc = '[C] [N]avigation' })
 
     require('neo-tree').setup {
       -- Close Neo-tree if it is the last window left in the tab
