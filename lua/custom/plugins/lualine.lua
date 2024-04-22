@@ -1,3 +1,4 @@
+-- Show a status bar at bottom of neovim screen
 return {
   'nvim-lualine/lualine.nvim',
   config = function()
