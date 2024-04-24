@@ -132,6 +132,9 @@ vim.opt.smartcase = true
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
+-- Set 80st column character line vertical
+vim.opt.colorcolumn = '80,120'
+
 -- Decrease update time
 vim.opt.updatetime = 250
 
@@ -549,6 +552,7 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -591,6 +595,7 @@ require('lazy').setup({
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      -- MY NOTE: This package make the middle field between Mason and LSP
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
