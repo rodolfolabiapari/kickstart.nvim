@@ -108,6 +108,10 @@ vim.opt.softtabstop = 2
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 
+-- Enable wrap inside vim and breaks between words
+vim.opt.wrap = true
+vim.opt.linebreak = true
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
 
@@ -768,12 +772,26 @@ require('lazy').setup({
         end
       end,
       formatters_by_ft = {
+        -- Adicionando bash com shfmt
+        bash = { 'shfmt' },
+        sh = { 'shfmt' },
+        zsh = { 'shfmt' },
+        hcl = { 'terraform' }, -- Formatador para Terragrunt (HCL)
         lua = { 'stylua' },
+        markdown = { 'prettier' }, -- Adicionando suporte para Markdown
+        terraform = { 'terraform' }, -- Formatador para Terraform
+        yaml = { 'prettier', 'yamlfmt' }, -- Formatadores para YAML
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+      formatters = {
+        injected = { options = { ignore_errors = true } },
+        shfmt = {
+          prepend_args = { '-i', '2', '-ci', '-bn' },
+        },
       },
     },
   },
@@ -1055,3 +1073,4 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
