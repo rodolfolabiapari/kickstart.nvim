@@ -14,6 +14,7 @@ return {
   },
   lazy = false,
   keys = {
+    -- Atencao, utilizar o \ (BARRA INVERTIDA) para abrir e fechar o neotree
     { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
   },
   opts = {
@@ -58,6 +59,7 @@ return {
       -- instead of relying on nvim autocmd events.
       window = {
         mappings = {
+          -- backspace
           ['<bs>'] = 'navigate_up',
           ['.'] = 'set_root',
           ['H'] = 'toggle_hidden',
@@ -91,6 +93,8 @@ return {
       commands = {}, -- Add a custom command or override a global one using the same function name
 
       -- Comando antigos para ancionamento do neo-tree
+      -- Esse comando significa Ctrl-n, mas utilize o barra invertida \
+      -- que é melhor que esse
       -- vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left toggle=true reveal=true<CR>', { desc = '[N]avigation Bar' })
       -- vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left<CR>', { desc = '[C] [N]avigation' })
     },

@@ -786,7 +786,7 @@ require('lazy').setup({
         zsh = { 'shfmt' },
         hcl = { 'terraform' }, -- Formatador para Terragrunt (HCL)
         lua = { 'stylua' },
-        markdown = { 'prettier' }, -- Adicionando suporte para Markdown
+        -- markdown = { 'prettier' }, -- Adicionando suporte para Markdown
         terraform = { 'terraform' }, -- Formatador para Terraform
         yaml = { 'prettier', 'yamlfmt' }, -- Formatadores para YAML
         -- Conform can also run multiple formatters sequentially
