@@ -50,6 +50,8 @@ return {
         leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
       },
       group_empty_dirs = false, -- when true, empty folders will be grouped together
+      --
+      -- NOTE Para desabilitar o neo-tree por padrao, mudar isso para disabled
       hijack_netrw_behavior = 'open_default', -- netrw disabled, opening a directory opens neo-tree
       -- in whatever position is specified in window.position
       -- "open_current",  -- netrw disabled, opening a directory opens within the
@@ -92,7 +94,7 @@ return {
       },
       commands = {}, -- Add a custom command or override a global one using the same function name
 
-      -- Comando antigos para ancionamento do neo-tree
+      -- NOTE Comando antigos para ancionamento do neo-tree
       -- Esse comando significa Ctrl-n, mas utilize o barra invertida \
       -- que é melhor que esse
       -- vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left toggle=true reveal=true<CR>', { desc = '[N]avigation Bar' })
