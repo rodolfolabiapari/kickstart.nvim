@@ -1,4 +1,8 @@
+-- Carrega arquivo de variaveis do ./lua/config_local.lua
+local status_ok, local_config = pcall(require, 'config_local')
+
 return {
+  -- https://deepwiki.com/obsidian-nvim/obsidian.nvim/2.3-basic-usage
   'obsidian-nvim/obsidian.nvim',
   version = '*',
   lazy = true,
@@ -14,21 +18,23 @@ return {
   opts = {
     workspaces = {
       {
-        name = "personal",
-        path = vim.fn.expand '~/Documents/obsidian/linux/'
+        name = "work",
+        -- Utiliza variavel local
+        path = local_config.obsidian_work_path,
       }
     },
     legacy_commands = false,
     ui = {
       ignore_conceal_warn = true,
+      enable = true,
     },
     completion = {
-      blink = true
+      blink = true,
     },
     daily_notes = {
       folder = os.date("9dailies/%Y-%m"),
       date_format = "%d",
-      alias_format = "%B %-d, %Y",
+      alias_format = "%B %-d %a, %Y",
       default_tags = { "daily-notes" },
       templates = {
         folder = "templates",
@@ -50,9 +56,8 @@ return {
   -- Custom Keys
   vim.keymap.set("n", "<leader>o",  "<cmd>Obsidian<CR>", { desc = "[O]bsidian Menu"}),
   vim.keymap.set("n", "<leader>ob", "<cmd>Obsidian backlinks<CR>", { desc = "Show [B]acklinks"}),
-  vim.keymap.set("n", "<leader>oc", "<cmd>Obsidian toc<CR>", { desc = "To[c] (table of contents)"}),
+  vim.keymap.set("n", "<leader>oc", "<cmd>Obsidian toc<CR>", { desc = "To[c] (Table of [C]ontents)"}),
   vim.keymap.set("n", "<leader>od", "<cmd>Obsidian today<CR>", { desc = "To[d]ay"}),
-  vim.keymap.set("n", "<leader>of", "<cmd>Obsidian follow_links<CR>", { desc = "[F]ollow Note"}),
   vim.keymap.set("n", "<leader>og", "<cmd>Obsidian tags<CR>", { desc = "Ta[g]s"}),
   vim.keymap.set("n", "<leader>on", "<cmd>Obsidian new<CR>", { desc = "New [N]ote"}),
   vim.keymap.set("n", "<leader>oq", "<cmd>Obsidian quick_switch<CR>", { desc = "[Q]uick Switch"}),
