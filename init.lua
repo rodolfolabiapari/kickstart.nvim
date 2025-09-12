@@ -723,6 +723,21 @@ require('lazy').setup({
             },
           },
         },
+
+        -- LSP para helm
+        helm_ls = { filetypes = { "helm" } },
+
+        -- LSP para yaml
+        yamlls = {
+          filetypes = { "yaml", "yaml.docker-compose" },
+          settings = {
+            yaml = {
+              validate = true,
+              keyOrdering = false,
+              schemaStore = { enable = true }
+            }
+          }
+        }
       }
 
       -- Ensure the servers and tools above are installed
@@ -739,6 +754,8 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'helm-ls',
+        'yaml-language-server'
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

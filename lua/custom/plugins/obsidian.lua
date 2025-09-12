@@ -30,6 +30,7 @@ return {
     },
     completion = {
       blink = true,
+      min_chars = 0,
     },
     daily_notes = {
       folder = os.date("9dailies/%Y-%m"),
