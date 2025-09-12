@@ -1,4 +1,12 @@
-# Git
+# Avisos da Paróquia
+
+## Fonte de algumas informacoes
+
+Projeto de colecoes sobre neovim: [awsome-neovim](https://github.com/rockerBOO/awesome-neovim).
+
+---
+
+## Git
 
 Pra eu nunca ficar esquecendo de como configura o fork:
 

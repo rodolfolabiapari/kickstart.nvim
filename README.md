@@ -1,38 +1,5 @@
 # kickstart.nvim
 
-## Rodolfos Annotation
-
-### Adicionando um novo remote
-
-Verificar se o remote est'a configurado
-
-```bash
-git remote -v
-kick    https://github.com/nvim-lua/kickstart.nvim.git (fetch)
-kick    https://github.com/nvim-lua/kickstart.nvim.git (push)
-origin  https://github.com/rodolfolabiapari/kickstart.nvim.git (fetch)
-origin  git@github.com:rodolfolabiapari/kickstart.nvim.git (push)
-```
-
-Caso não esteja configurado, adicionar o novo remote
-
-```bash
-git remote add kick https://github.com/nvim-lua/kickstart.nvim.git
-```
-
-### Atualizando a branch com o remote diferente de `origin`
-
-Atualiza as referências locais com o upstream
-
-```bash
-git remote
-git fetch kick
-``` 
-
-```bash
-git merge kick/master
-```
-
 ## Introduction
 
 A starting point for Neovim that is:
