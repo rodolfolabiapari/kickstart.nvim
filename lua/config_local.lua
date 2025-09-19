@@ -3,7 +3,7 @@
 
 return {
   -- monta o path para plugin obsidian concatenando ~ com o path final
-  obsidian_work_path = vim.fn.expand('~') .. '/Documents/obsidian/linux/',
+  obsidian_work_path = vim.fn.expand('~') .. '/Documents/obsidian/linux/' ,
 
   -- neovim theme
   nvim_theme = "mocha",
