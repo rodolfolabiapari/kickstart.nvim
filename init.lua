@@ -431,12 +431,25 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
+        defaults = {
         --   mappings = {
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
-        -- },
-        -- pickers = {}
+          file_ignore_patterns = {
+            '%.git/', 'node_modules/', '%.cache/', 'target/', 'dist', '%.terraform/'
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
+            follow = true,
+          },
+          live_grep = {
+            additional_args = function (_)
+              return { '--hidden', '--glob', '!.git/*' }
+            end,
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -821,7 +834,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         -- markdown = { 'prettier' }, -- Adicionando suporte para Markdown
         terraform = { 'terraform' }, -- Formatador para Terraform
-        yaml = { 'prettier', 'yamlfmt' }, -- Formatadores para YAML
+        -- yaml = { 'prettier', 'yamlfmt' }, -- Formatadores para YAML
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --

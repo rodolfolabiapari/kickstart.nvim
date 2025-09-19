@@ -1,4 +1,5 @@
 -- autopairs
+-- Configura o checkbox e itens items ao apertar enter
 -- https://github.com/windwp/nvim-autopairs
 
 return {

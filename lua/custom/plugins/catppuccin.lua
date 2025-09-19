@@ -9,11 +9,14 @@ return {
       require("catppuccin").setup({
         flavour = local_config.nvim_theme,
         integrations = {
-          treesitter = true,
+          cmp = true,
+          fidget = true,
+          gitsigns = true,
+          lsp_trouble = true,
           native_lsp = { enabled = true },
           telescope = true,
-          cmp = true,
-          gitsigns = true,
+          treesitter = true,
+          which_key = true,
         },
       })
       vim.cmd.colorscheme "catppuccin"
