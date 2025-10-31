@@ -1,4 +1,5 @@
 local status_ok, local_config = pcall(require, 'config_local')
+
 return {
   {
     "catppuccin/nvim",
@@ -8,6 +9,7 @@ return {
     config = function ()
       require("catppuccin").setup({
         flavour = local_config.nvim_theme,
+        -- flavour = "mocha",
         integrations = {
           cmp = true,
           fidget = true,
