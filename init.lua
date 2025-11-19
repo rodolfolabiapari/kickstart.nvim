@@ -370,7 +370,9 @@ require('lazy').setup({
       spec = {
         { '<leader>s', group = '[S]earch' },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>o', group = '[O]bsidian' },
+        { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
+        { '<leader>h', group = 'Git [H]unks', mode = { 'n', 'v' } },
       },
     },
   },
@@ -711,7 +713,16 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         -- My NOTE: It has to exist node on the machine. I installed node@20
-        pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              analisys = {
+                typeCheckingMode = 'basic',
+                autoImportCompletions = true,
+              },
+            },
+          },
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -739,6 +750,18 @@ require('lazy').setup({
 
         -- LSP para helm
         helm_ls = { filetypes = { "helm" } },
+
+        bashls = {
+          filetypes = { 'sh', 'bash' },
+        },
+
+        terraformls = {
+          filetypes = { 'terraform', 'terraform-vars', 'hcl' },
+          root_dir = function(fname)
+            local util = require('lspconfig.util')
+            return util.root_pattern('.terraform', '.git', 'terraform.hcl')(fname) or util.path.dirname(fname)
+          end,
+        },
 
         -- LSP para yaml
         yamlls = {
@@ -830,13 +853,14 @@ require('lazy').setup({
         bash = { 'shfmt' },
         sh = { 'shfmt' },
         zsh = { 'shfmt' },
-        hcl = { 'terraform' }, -- Formatador para Terragrunt (HCL)
+        hcl = { 'terraform_fmt' }, -- Formatador para Terragrunt (HCL)
         lua = { 'stylua' },
         -- markdown = { 'prettier' }, -- Adicionando suporte para Markdown
-        terraform = { 'terraform' }, -- Formatador para Terraform
+        terraform = { 'terraformt_fmt' }, -- Formatador para Terraform
+        ['terraform-vars'] = { 'terraform_fmt' }, -- para variaveis
         -- yaml = { 'prettier', 'yamlfmt' }, -- Formatadores para YAML
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { "ruff_format", "ruff_organize_imports", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -1086,7 +1110,7 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps

@@ -6,5 +6,6 @@ return {
   obsidian_work_path = vim.fn.expand('~') .. '/Documents/obsidian/linux/' ,
 
   -- neovim theme
-  nvim_theme = "mocha",
+  nvim_theme = "macchiato",
+  -- nvim_theme = "mocha",
 }
