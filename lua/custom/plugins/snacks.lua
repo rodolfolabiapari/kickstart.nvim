@@ -30,17 +30,20 @@ return {
 
   -- Definição de Atalhos (A mágica acontece aqui)
   keys = {
-    -- === GRUPO Z: Zen / Utilitários (Namespace seguro) ===
-    { "<leader>z",  function() require("snacks").zen() end, desc = "Toggle [z]en Mode" },
-    { "<leader>Z",  function() require("snacks").zen.zoom() end, desc = "Toggle [Z]oom" },
-    { "<leader>bd", function() require("snacks").bufdelete() end, desc = "Delete Buffer" },
-    { "<leader>cR", function() require("snacks").rename.rename_file() end, desc = "Rename File" },
 
-    -- === GRUPO G: Git (Integração com seu grupo existente) ===
-    -- O Kickstart já tem <leader>g como grupo. Adicionamos ações diretas.
-    { "<leader>gg", function() require("snacks").lazygit() end, desc = "Lazygit" },
-    { "<leader>gb", function() require("snacks").git.blame_line() end, desc = "Git Blame Line" },
-    { "<leader>gl", function() require("snacks").lazygit.log() end, desc = "Git Log (Lazygit)" },
+    -- Grupo [Z]en & Utils
+    { "<leader>zz", function() require("snacks").zen() end, desc = "[ZZ]en Mode Toggle" },
+    { "<leader>zm", function() require("snacks").zen.zoom() end, desc = "[Z]oom [M]aximize" },
+    { "<leader>zs", function() require("snacks").scratch() end, desc = "[Z]en [S]cratchpad" },
+    { "<leader>zb", function() require("snacks").bufdelete() end, desc = "Delete [B]uffer" },
+
+    -- Grupo [G]it (Complementar ao Gitsigns)
+    { "<leader>gg", function() require("snacks").lazygit() end, desc = "[G]it [G]ui (Lazygit)" },
+    { "<leader>gl", function() require("snacks").lazygit.log() end, desc = "[G]it [L]og (Lazygit)" },
+    { "<leader>gb", function() require("snacks").git.blame_line() end, desc = "[G]it [B]lame Line" },
+
+    -- === GRUPO Z: Zen / Utilitários (Namespace seguro) ===
+    { "<leader>cR", function() require("snacks").rename.rename_file() end, desc = "Rename File" },
 
     -- === ATALHOS GLOBAIS ÚTEIS ===
     { "]]",         function() require("snacks").words.jump(1, true) end, desc = "Next Reference" },

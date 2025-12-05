@@ -368,11 +368,12 @@ require('lazy').setup({
 
       -- Document existing key chains
       spec = {
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>f', group = '[F]ind' },
+        { '<leader>g', group = '[G]it' },
+        { '<leader>h', group = 'Git [H]unk' },
         { '<leader>s', group = '[S]earch' },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>o', group = '[O]bsidian' },
-        { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
-        { '<leader>h', group = 'Git [H]unks', mode = { 'n', 'v' } },
+        { '<leader>z', group = '[Z]en/Utils/Snacks' },
       },
     },
   },
@@ -475,6 +476,10 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+      -- Grupo [F]ind
+      vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
+      vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = '[F]ind [G]it Files' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -819,12 +824,12 @@ require('lazy').setup({
     cmd = { 'ConformInfo' },
     keys = {
       {
-        '<leader>f',
+        '<leader>cf', -- Alterado de f para cf para evitar conflito
         function()
           require('conform').format { async = true, lsp_fallback = true }
         end,
         mode = '',
-        desc = '[F]ormat buffer',
+        desc = '[C]ode [F]ormat buffer',
       },
     },
     opts = {
