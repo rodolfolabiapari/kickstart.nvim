@@ -112,6 +112,11 @@ vim.opt.shiftwidth = 2
 vim.opt.wrap = true
 vim.opt.linebreak = true
 
+-- Garanta que textwidth esteja definido para o tipo de arquivo
+-- Utilizado quando, em modo v, apertamos `gw` para quebrar linhas
+-- automaticamente
+vim.opt.textwidth = 80
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
 
