@@ -21,7 +21,7 @@ return {
     input = { enabled = true },
     notifier = {
       enabled = true,
-      timeout = 7000,
+      timeout = 10000,
     },
     picker = {
       enabled = true,
