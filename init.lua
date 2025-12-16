@@ -229,6 +229,12 @@ vim.keymap.set('n', '<C-k>', ':wincmd k<CR>')
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+-- Keys relacionadas a clipboard
+-- Faz o 'x' nunca afetar o clipboard
+vim.keymap.set({"n", "v"}, "x", '"_x', { desc = "Delete char to black hole" })
+-- Atalho dedicado para deletar linha para o void (ex: <leader>d)
+-- vim.keymap.set({"n", "v"}, "<leader>d", '"_d', { desc = "Delete to black hole" })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
