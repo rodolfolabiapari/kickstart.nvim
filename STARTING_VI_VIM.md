@@ -1,5 +1,7 @@
 # Starting
 
+Leia o `:help text-objects`.
+
 Execute `:!column -t -s '|' -o '|'` para formatar tables.
 
 Formato `(number)(command)(text object)`, sendo *number* opcional, *command* é
@@ -44,7 +46,7 @@ Os registradores devem preceder o commando, exemplo `"dyy`, `"dP`.
 | `z`      | `-`      | Move a linha atual para baixo
 | `m`      | x       | Marca sua posicao atual no texto com a letra x
 | `'`      | x       | Vai para o início da linha na marcação x
-| `\``     | x       | Vai para o char na marcação x
+| \`     | x       | Vai para o char na marcação x
 | `''`     |         | Retorna para início da linha da última posicao marcada
 | \`\`     |         | Retorna para o char da última posição marcada
 | ``       | ``       | 
@@ -52,13 +54,107 @@ Os registradores devem preceder o commando, exemplo `"dyy`, `"dP`.
 
 ## `ex` s2
 
-Recomenda-se `:set number`.
+`ex` é um executor de LINHAS! Recomenda-se `:set number`.
 
-`:160:224m23` | Move de 160 a linha 224 para linha 23. Números absolutos.
-`:160:224co23` | Copia de 160 a linha 224 para linha 23. Números absolutos.
-`:.,$d` | Deleta da linha atual até o fim do arquivo
-`:20,.m$` | Move da linha 20 até atual para o fim do arquivo.
-`:%d` | Deleta o conteúdo do arquivo
+| Cmd | Informação
+| --- | ----------
+| `:e!` | volta o arquivo original
+
+Valores absolutos
+
+| Cmd | Informação
+| --- | ----------
+| `:160:224m23` | Move de 160 a linha 224 para linha 23. Números absolutos.
+| `:160:224co23` | Copia de 160 a linha 224 para linha 23. Números absolutos.
+
+### Line address symbols, valores relativos e marcacoes
+
+| Cmd | Informação
+| --- | ----------
+| `:.,$d` | Deleta da linha atual até o fim do arquivo
+| `:.,.+20d` | Deleta a linha atual +20
+| `:%d` | Deleta o conteúdo do arquivo
+
+ Se eu tiver na linha 1 então `:100,+5 p` nao faz sentido.
+
+| Cmd | Informação
+| --- | ----------
+| `:226,$m.-2` | Move da 266 até o final para 2 linhas acima do cursor
+| `:20,.m$` | Move da linha 20 até atual para o fim do arquivo.
+
+| Cmd | Informação
+| --- | ----------
+| `:%t$` | Duplica todo o conteúdo no final do arquivo
+| `:-,+t0` | copia 3, ao redor do cursor, linhas e coloca no início do arquivo
+
+Se eu tiver na linha 1 então `:100,+5 p` nao faz sentido. Para isso, usar o `;`
+como em `:100;+5 p` para calcular o segundo com base no primeiro.
+
+### Pesquisas
+
+Pesquisas sempre devem ter o `/`, `/padrao/` no início e no fim.
+
+| Cmd | Informação
+| --- | ----------
+| `:/PADRAO/d` | Deleta a linha do proximo padrao
+| `:/PADRAO/+d` | Deleta a linha abaixo ao padrao
+| `:/padrao1/,/padrao2/d` | deleta do padrao1 ao 2
+| `:.,/padrao/m23` | pega a linha atual até o padrao e move para depois da 23
+| `:/padrao/;+10 p` | pega a linha com padrao, soma mais 10 e imprime num buffer
+
+
+> Atenção! `d/padrao` deleta do cursor até o padrao, deixando todo o resto. Já
+> o comando `ex` `:./padrao/d` deleta a linha inteira!
+
+| Cmd | Informação
+| --- | ----------
+| `:g/padrao` | pequisa e exibe todas as linhas com o padrao
+| `:g!/padrao` | Exibe todas as linhas que nao possui o padrao
+| `:60,125g/padrao/p` | seleciona a linha 60 a 125 e pesquisa o padrao e exibe
+
+### Substituições
+
+| Cmd | Informação
+| --- | ----------
+| `:s/antigo/novo/` | s a primeira ocorrencia na linha atual.
+| `:s/antigo/novo/g` | s a todas as ocorrencias na linha atual.
+| `:50,100 s/antigo/novo/g` | num intervalo de linhas faz as subs
+| `:1,$ s/antigo/novo/g` | substitui todas as ocorrencias do arquivo
+| `:% s/antigo/novo/g` | semelhante acima
+| `:% s/antigo/novo/gc` | semelhante acima com confirmacao
+| `:g/padrao1/ s/antigo/novo/gc` | em todas as linhas que tem padrao1, faz a substituicao com confirmacao
+| `:g/padrao1/ s//novo/gc` | semelhante acima
+| `:% s/padrao1/&, padrao2/` | O `&` repete a pesquisa na substituicao, evitando reescrita
+
+### Salvando e saindo
+
+| Cmd | Informação
+| --- | ----------
+| `:230,$ w filename` | salva em outro arquivo de 230 até o final
+| `:.-21,.+10 w filename` | salva em outro arquivo um pedaco relativo de texto
+
+
+## Buffers
+
+`:ls` ou `SPACE SPACE` com lazy
+
+
+### Folders
+
+| Cmd   | Sub       | Informação
+| ----- | ---       | ----------
+| `z`   | `A`       | Toggle recursivamente
+| `z`   | `C`       | Fecha recursivamente
+| `z`   | `O`       | Abre recursivamente
+| `z`   | `D`       | Deleta recursivamente
+| `z`   | `E`       | Elimina todas
+| `z`   | `f`       | Cria um foder até o f
+| `count z`   | `F`       | Cria folder com n linhas
+| `z`   | `a`       | toggle 1 folder
+| `z`   | `c`       | close 1 folder
+| `z`   | `o`       | open 1 folder
+| `z`   | `j k`       |  move o cursor para os folders
+
 
 ## Playground
 
