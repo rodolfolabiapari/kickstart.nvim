@@ -2,7 +2,25 @@
 
 ## TODOs
 
-mapas, quickfixes, plugins do nvim
+mapas, quickfixes, plugins do nvim, `g:`
+
+- `:% y` faz o mesmo que `ggVGy` e `ggyG`
+- `:q` é diferente de `q:` (exit vs command-line window)
+  - entender melhor a funcao do command-line window
+- Ver o site
+- no modo inserção o `CTRL-r` abre registradores
+- no vim `vimtutor` e no nvim `:Tutor`
+- calculadora dentro do vim:
+  - `:=2+2` te mostra o resultado
+  - no insert mode `CTRL-r`, `= 2+2` retorna para o texto
+- `:windo diffthis` faz diff entre arquivos abertos
+  - É a mesma coisa que ir em cada janela e fazer `:diffthis`
+  - `[c` e `]c` pula diferenças
+  - `do` e `dp` pu e obtain sempre da janela atual
+  - `:windo diffoff`
+- `:verbose set fo?` mostra quem alterou por último  o fo
+
+
 
 ## Usando o `:help`
 
@@ -52,12 +70,14 @@ Os registradores devem preceder o commando, exemplo `"dyy`, `"dP`.
 | `J`   |           | Junta a linha atual com a próxima
 | `d`   | `/PADRAO` | deleta do cursor até o PADRAO, nao incluso
 | `d`   | `f` x     | Deleta até encontrar x
-| `g`   | muita coisa       | Faz inúmeros movimentos, pesquisar sobre              
+| `g`   | muita coisa       | Faz inúmeros movimentos, pesquisar sobre
 | `g`   | `q`       | quebra linhas na coluna 80 ou 120
 | `g`   | `qap`       | faz `gq` around paragraph
 | `g`   | `~w`       | Switch case em `w`
 | `g`   | `uw`, `Uw` | lower uppercase em `w`
 | `g`   | `p`, `P` | cola mas deixa o cursor no final da colagem
+| `g`   | `v` | Repeta a última selecao no modo visual
+| `g` | `i` | Vai para o último local de insercao feito
 | `<`, `>` | | faz shift de texto. Verificar o tamanho com o `shiftwidth`
 | `<`, `>` | `}` | faz shift parágrafo
 | `<`, `>` | `%` | faz shift do bloco correspondente
@@ -100,17 +120,19 @@ Os registradores devem preceder o commando, exemplo `"dyy`, `"dP`.
 
 ### Marcações
 
-| `'`       |                  | Semelhante ao de registradores `"`, mas para marcações
-| `:marks`       |                  | Semelhante ao de registradores `"`, mas para marcações
-| `m`       | x                 | Marca sua posicao atual no texto com a letra x        
-| \`        | x                 | Vai para o char na marcação x                         
-| `'`       | x                 | Vai para o início da linha na marcação x              
-| `''`      |                   | Retorna para início da linha da última posicao marcada
-| \`\`      |                   | Retorna para o char da última posição marcada         
-| `'` | `"` | Move para a última posição editada
-| `'` | `.` | Move para a última posição editada no início da linha
-| `'` | `.` | Move para a última posição editada no char exato
-| `'` | `0` | Move para a última posição da última vez que abriu o vim
+| Cmd            | Sub               | Informação                                            
+| -----          | ---               | ----------                                            
+| `'`            |                   | Semelhante ao de registradores `"`, mas para marcações
+| `:marks`       |                   | Semelhante ao de registradores `"`, mas para marcações
+| `m`            | x                 | Marca sua posicao atual no texto com a letra x        
+| \`             | x                 | Vai para o char na marcação x                         
+| `'`            | x                 | Vai para o início da linha na marcação x              
+| `''`           |                   | Retorna para início da linha da última posicao marcada
+| \`\`           |                   | Retorna para o char da última posição marcada         
+| `'`            | `"`               | Move para a última posição editada
+| `'`            | `.`               | Move para a última posição editada no início da linha
+| `'`            | `.`               | Move para a última posição editada no char exato
+| `'`            | `0`               | Move para a última posição da última vez que abriu o vim
 
 ### Folders
 
@@ -144,7 +166,9 @@ O padrão é `:[address]command[options]`
 > Para ver todas as configurações definidas diferentes do padrão, execute
 > `:set`.
 
-Se quiser ver o histórico, dentro do *command line* aperte `Ctrl+F`
+Se quiser ver o histórico, dentro do *command line* aperte `Ctrl+F`.
+
+Para ver mensagens :messages
 
 | Cmd   | Informação
 | ---   | ----------

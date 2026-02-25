@@ -21,7 +21,13 @@ return {
     input = { enabled = true },
     notifier = {
       enabled = true,
-      timeout = 10000,
+      timeout = 4000,
+      margin = {
+        top = 0,
+        right = 0,
+        bottom = 1
+      },
+      padding = true,
     },
     picker = {
       enabled = true,

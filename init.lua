@@ -109,14 +109,14 @@ vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 
 -- Enable wrap inside vim and breaks between words
+-- somente para modo VISUAL
 vim.opt.wrap = true
 vim.opt.linebreak = true
 
 -- Garanta que textwidth esteja definido para o tipo de arquivo
 -- Utilizado quando, em modo v, apertamos `gw` para quebrar linhas
 -- automaticamente
--- Removi pois mais me atrapalha que me ajuda
--- vim.opt.textwidth = 80
+vim.opt.textwidth = 120
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
