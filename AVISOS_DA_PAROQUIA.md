@@ -26,3 +26,8 @@ Pra eu nunca ficar esquecendo de como configura o fork:
 	url = git@github.com:rodolfolabiapari/kickstart.nvim.git
 	fetch = +refs/heads/*:refs/remotes/origin/*
 ```
+
+## Erros
+
+Para remover todos os plugins `rm -rf ~/.local/share/nvim/lazy/`
+Para remover pacotes mason `rm -rf ~/.local/share/nvim/mason/`
