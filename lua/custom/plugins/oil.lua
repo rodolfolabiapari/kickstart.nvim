@@ -2,7 +2,7 @@ return {
   {
     "stevearc/oil.nvim",
     opts = {},
-    dependencies = { "nvim-tree/nvim-web-devicons" }, -- Opcional, para ícones
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("oil").setup({
         default_file_explorer = true,
@@ -16,8 +16,6 @@ return {
           show_hidden = true,
         },
       })
-      -- Mapeamento sugerido para abrir o Oil no diretório atual
-      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end,
   },
 }

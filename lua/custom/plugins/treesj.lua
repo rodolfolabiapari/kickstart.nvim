@@ -2,9 +2,9 @@
 -- https://github.com/Wansmer/treesj
 return {
   'Wansmer/treesj',
-  keys = { '<space>m', '<space>j', '<space>s' },
+  cmd = { "TSJToggle", "TSJSplit", "TSJJoin" }, -- Carrega o plugin apenas quando o comando for chamado
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
-  config = function()
-    require('treesj').setup({})
-  end,
+  opts = {
+    use_default_keymaps = false, -- Desativa os atalhos padrão do plugin para não conflitar
+  },
 }

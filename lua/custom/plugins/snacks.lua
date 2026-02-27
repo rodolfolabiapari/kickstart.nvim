@@ -143,7 +143,10 @@ return {
       },
     },
     quickfile = { enabled = true },
+    scratch = { enabled = true },
+    lazygit = { enabled = true },
     scope = { enabled = true },
+    rename = { enabled = true },
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
     styles = {
@@ -164,7 +167,6 @@ return {
     { "<leader>zz", function() require("snacks").zen() end, desc = "[ZZ]en Mode Toggle" },
     { "<leader>zm", function() require("snacks").zen.zoom() end, desc = "[Z]oom [M]aximize" },
     { "<leader>zs", function() require("snacks").scratch() end, desc = "[Z]en [S]cratchpad" },
-    { "<leader>zb", function() require("snacks").bufdelete() end, desc = "Delete [B]uffer" },
 
     -- Grupo [G]it (Complementar ao Gitsigns)
     { "<leader>gg", function() require("snacks").lazygit() end, desc = "[G]it [G]ui (Lazygit)" },

@@ -338,13 +338,13 @@ require('lazy').setup({
 
       -- Document existing key chains
       spec = {
-        { '<leader>c', group = '[C]ode' },
-        { '<leader>f', group = '[F]ind' },
-        { '<leader>g', group = '[G]it' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-        { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>z', group = '[Z]en/Utils/Snacks' },
+        -- { '<leader>c', group = '[C]ode' },
+        -- { '<leader>f', group = '[F]ind' },
+        -- { '<leader>g', group = '[G]it' },
+        -- { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        -- { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
+        -- { '<leader>t', group = '[T]oggle' },
+        -- { '<leader>z', group = '[Z]en/Utils/Snacks' },
       },
     },
   },
@@ -971,10 +971,10 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     config = function()
-      local configs = require('nvim-treesitter.configs')
+      local configs = require('nvim-treesitter.config')
 
       configs.setup({
-        ensure_installed = { 
+        ensure_installed = {
           'bash',
           'diff',
           'dockerfile',
@@ -1053,7 +1053,6 @@ require('lazy').setup({
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
-  -- { import = 'custom.keymaps' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -1075,6 +1074,8 @@ require('lazy').setup({
     },
   },
 })
+
+require("custom.keymaps")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

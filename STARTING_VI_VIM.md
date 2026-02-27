@@ -19,6 +19,7 @@ mapas, quickfixes, plugins do nvim, `g:`
   - `do` e `dp` pu e obtain sempre da janela atual
   - `:windo diffoff`
 - `:verbose set fo?` mostra quem alterou por último  o fo
+  - `:verbose map <leader>sf` exibe onde a keymap foi mapeada
 
 
 
