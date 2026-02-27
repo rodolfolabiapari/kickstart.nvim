@@ -525,7 +525,27 @@ require('lazy').setup({
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'mason-org/mason.nvim', opts = {} },
+      { 'mason-org/mason.nvim', opts = 
+        {
+          ui = {
+            border = "rounded", -- Use rounded borders for the Mason window
+            icons = {
+              package_installed = "✅",
+              package_pending = "⏳",
+              package_uninstalled = "❌"
+            }
+          },
+
+          -- Pip configuration
+          pip = {
+              upgrade_pip = true,
+              install_args = {"--no-cache-dir"}
+          },
+
+          -- Log level
+          log_level = vim.log.levels.DEBUG, -- Useful for troubleshooting
+        },
+      },
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
@@ -658,49 +678,7 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
-        --
 
-        lua_ls = {
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
-            },
-          },
-        },
-
-        -- LSP para helm
-        helm_ls = { filetypes = { "helm" } },
-
-        bashls = {
-          filetypes = { 'sh', 'bash' },
-        },
-
-        terraformls = {
-          filetypes = { 'terraform', 'terraform-vars', 'hcl' },
-          root_dir = function(fname)
-            local util = require('lspconfig.util')
-            return util.root_pattern('.terraform', '.git', 'terraform.hcl')(fname) or util.path.dirname(fname)
-          end,
-        },
-
-        -- LSP para yaml
-        yamlls = {
-          filetypes = { "yaml", "yaml.docker-compose" },
-          settings = {
-            yaml = {
-              validate = true,
-              keyOrdering = false,
-              schemaStore = { enable = true }
-            }
-          }
-        }
       }
 
       -- Ensure the servers and tools above are installed
@@ -712,11 +690,30 @@ require('lazy').setup({
       -- You can press `g?` for help in this menu.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'lua_ls', -- Lua Language server
+        'lua-language-server', -- Lua Language server
         'stylua', -- Used to format Lua code
         -- You can add other tools here that you want Mason to install
-        'helm-ls',
-        'yaml-language-server'
+        { 'bash-language-server' },
+        { 'bash-language-server', auto_update = true },
+        'editorconfig-checker',
+        'gofumpt',
+        'golines',
+        'gomodifytags',
+        'gotests',
+        { 'helm-ls' },
+        'impl',
+        'json-to-struct',
+        'lua-language-server',
+        'misspell',
+        'revive',
+        'shellcheck',
+        'shellcheck',
+        'shfmt',
+        'staticcheck',
+        { 'terraform-ls' },
+        'vim-language-server',
+        'vint',
+        { 'yaml-language-server' },
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -972,45 +969,55 @@ require('lazy').setup({
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
     config = function()
-      local filetypes = {
-        'bash',
-        'diff',
-        'dockerfile',
-        'git_config',
-        'git_rebase',
-        'gitcommit',
-        'gitignore',
-        'go',
-        'hcl',
-        'helm',
-        'html',
-        'java',
-        'javascript',
-        'jq',
-        'json',
-        'lua',
-        'luadoc',
-        'markdown',
-        'markdown_inline',
-        'passwd',
-        'pem',
-        'python',
-        'query',
-        'regex',
-        'ssh_config',
-        'terraform',
-        'tmux',
-        'toml',
-        'vim',
-        'vimdoc',
-        'yaml',
-        'xml'
-      }
-      require('nvim-treesitter').install(filetypes)
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = filetypes,
-        callback = function() vim.treesitter.start() end,
+      local configs = require('nvim-treesitter.configs')
+
+      configs.setup({
+        ensure_installed = { 
+          'bash',
+          'diff',
+          'dockerfile',
+          'git_config',
+          'git_rebase',
+          'gitcommit',
+          'gitignore',
+          'go',
+          'hcl',
+          'helm',
+          'html',
+          'java',
+          'javascript',
+          'jq',
+          'json',
+          'lua',
+          'luadoc',
+          'markdown',
+          'markdown_inline',
+          'passwd',
+          'pem',
+          'python',
+          'query',
+          'regex',
+          'ssh_config',
+          'terraform',
+          'tmux',
+          'toml',
+          'vim',
+          'vimdoc',
+          'yaml',
+          'xml'
+        },
+
+        -- Automatically install missing parsers when entering buffer
+        auto_install = true,
+
+        highlight = {
+          enable = true, -- This replaces your manual autocommands
+          additional_vim_regex_highlighting = false,
+        },
+
+        indent = { enable = true },
       })
     end,
   },
@@ -1046,6 +1053,7 @@ require('lazy').setup({
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
+  -- { import = 'custom.keymaps' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
