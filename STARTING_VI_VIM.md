@@ -42,7 +42,7 @@ Sobre atalhos e mapas veja `:map`
 ## Introdução
 
 Execute `:!column -t -s '|' -o '|'` para formatar tables.
-
+para o macock, instalar o `brew install util-linux` e usar o comando *unix-like* `:!gcolumn -t -s '|' -o '|'`.
 Formato `(number)(command)(text object)`, sendo *number* opcional, *command* é
 ação e *text object* é movimento.
 
