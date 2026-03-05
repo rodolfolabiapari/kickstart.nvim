@@ -12,7 +12,7 @@ return {
     ---@diagnostic disable-next-line: missing-fields
     opts = {
       on_attach = function(bufnr)
-        local gitsigns = require 'gitsigns'
+        local gitsigns = require("gitsigns")
 
         local function map(mode, l, r, opts)
           opts = opts or {}
@@ -21,21 +21,21 @@ return {
         end
 
         -- Navigation
-        map('n', ']c', function()
+        map("n", "]c", function()
           if vim.wo.diff then
-            vim.cmd.normal { ']c', bang = true }
+            vim.cmd.normal({ "]c", bang = true })
           else
-            gitsigns.nav_hunk 'next'
+            gitsigns.nav_hunk("next")
           end
-        end, { desc = 'Jump to next git [c]hange' })
+        end, { desc = "Jump to next git [c]hange" })
 
-        map('n', '[c', function()
+        map("n", "[c", function()
           if vim.wo.diff then
-            vim.cmd.normal { '[c', bang = true }
+            vim.cmd.normal({ "[c", bang = true })
           else
-            gitsigns.nav_hunk 'prev'
+            gitsigns.nav_hunk("prev")
           end
-        end, { desc = 'Jump to previous git [c]hange' })
+        end, { desc = "Jump to previous git [c]hange" })
 
         -- Actions
         -- visual mode
@@ -52,8 +52,8 @@ return {
         map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
         map('n', '<leader>hD', function() gitsigns.diffthis '@' end, { desc = 'git [D]iff against last commit' })
         -- Toggles
-        map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
-        map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
+        map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "[T]oggle git show [b]lame line" })
+        map("n", "<leader>tD", gitsigns.preview_hunk_inline, { desc = "[T]oggle git show [D]eleted" })
       end,
     },
   },

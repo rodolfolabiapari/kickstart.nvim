@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -102,7 +102,21 @@ vim.g.have_nerd_font = false
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.opt.relativenumber = true
+vim.opt.expandtab = true
+vim.opt.softtabstop = 2
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+
+-- Enable wrap inside vim and breaks between words
+-- somente para modo VISUAL
+vim.opt.wrap = true
+vim.opt.linebreak = true
+
+-- Garanta que textwidth esteja definido para o tipo de arquivo
+-- Utilizado quando, em modo v, apertamos `gw` para quebrar linhas
+-- automaticamente
+vim.opt.textwidth = 120
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -128,6 +142,9 @@ vim.o.smartcase = true
 
 -- Keep signcolumn on by default
 vim.o.signcolumn = 'yes'
+
+-- Set 80st column character line vertical
+vim.opt.colorcolumn = '80,120'
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -198,25 +215,36 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+-- vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+-- vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+-- vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+-- Evita usar o <C-w> e move direto com tecla :wincmd
+vim.keymap.set('n', '<C-h>', ':wincmd h<CR>')
+vim.keymap.set('n', '<C-l>', ':wincmd l<CR>')
+vim.keymap.set('n', '<C-j>', ':wincmd j<CR>')
+vim.keymap.set('n', '<C-k>', ':wincmd k<CR>')
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+
+-- Keys relacionadas a clipboard
+-- Faz o 'x' nunca afetar o clipboard
+vim.keymap.set({"n", "v"}, "x", '"_x', { desc = "Delete char to black hole" })
+-- Atalho dedicado para deletar linha para o void (ex: <leader>d)
+-- vim.keymap.set({"n", "v"}, "<leader>d", '"_d', { desc = "Delete to black hole" })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -388,12 +416,25 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
+        defaults = {
         --   mappings = {
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
-        -- },
-        -- pickers = {}
+          file_ignore_patterns = {
+            '%.git/', 'node_modules/', '%.cache/', 'target/', 'dist', '%.terraform/'
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
+            follow = true,
+          },
+          live_grep = {
+            additional_args = function (_)
+              return { '--hidden', '--glob', '!.git/*' }
+            end,
+          },
+        },
         extensions = {
           ['ui-select'] = { require('telescope.themes').get_dropdown() },
         },
@@ -492,7 +533,25 @@ require('lazy').setup({
         ---@module 'mason.settings'
         ---@type MasonSettings
         ---@diagnostic disable-next-line: missing-fields
-        opts = {},
+        opts = {
+          ui = {
+            border = "rounded", -- Use rounded borders for the Mason window
+            icons = {
+              package_installed = "✅",
+              package_pending = "⏳",
+              package_uninstalled = "❌"
+            }
+          },
+
+          -- Pip configuration
+          pip = {
+              upgrade_pip = true,
+              install_args = {"--no-cache-dir"}
+          },
+
+          -- Log level
+          log_level = vim.log.levels.DEBUG, -- Useful for troubleshooting
+        },
       },
       -- Maps LSP server names between nvim-lspconfig and Mason package names.
       'mason-org/mason-lspconfig.nvim',
@@ -605,7 +664,17 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        -- My NOTE: It has to exist node on the machine. I installed node@20
+        pyright = {
+          settings = {
+            python = {
+              analisys = {
+                typeCheckingMode = 'basic',
+                autoImportCompletions = true,
+              },
+            },
+          },
+        },
         -- rust_analyzer = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -655,7 +724,28 @@ require('lazy').setup({
       -- You can press `g?` for help in this menu.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
+        'lua-language-server', -- Lua Language server
+        'stylua', -- Used to format Lua code
         -- You can add other tools here that you want Mason to install
+        { 'bash-language-server' },
+        'editorconfig-checker',
+        'gofumpt',
+        'golines',
+        'gomodifytags',
+        'gotests',
+        { 'helm-ls' },
+        'impl',
+        'json-to-struct',
+        'misspell',
+        'revive',
+        'shellcheck',
+        'shellcheck',
+        'shfmt',
+        'staticcheck',
+        { 'terraform-ls' },
+        'vim-language-server',
+        'vint',
+        { 'yaml-language-server' },
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -673,37 +763,58 @@ require('lazy').setup({
     cmd = { 'ConformInfo' },
     keys = {
       {
+        '<leader>cf', -- Alterado de f para cf para evitar conflito
         '<leader>f',
         function() require('conform').format { async = true, lsp_format = 'fallback' } end,
         mode = '',
-        desc = '[F]ormat buffer',
+        desc = '[C]ode [F]ormat buffer',
       },
     },
     ---@module 'conform'
     ---@type conform.setupOpts
     opts = {
       notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        else
-          return {
-            timeout_ms = 500,
-            lsp_format = 'fallback',
-          }
-        end
-      end,
+      -- Desabilitei o auto format
+      -- para usar de forma manual, use <leader>f
+      format_on_save = false,
+      -- format_on_save = function(bufnr)
+      --   -- Disable "format_on_save lsp_fallback" for languages that don't
+      --   -- have a well standardized coding style. You can add additional
+      --   -- languages here or re-enable it for the disabled ones.
+      --   local disable_filetypes = { c = true, cpp = true }
+      --   local lsp_format_opt
+      --   if disable_filetypes[vim.bo[bufnr].filetype] then
+      --     lsp_format_opt = 'never'
+      --   else
+      --     lsp_format_opt = 'fallback'
+      --   end
+      --   return {
+      --     timeout_ms = 500,
+      --     lsp_format = lsp_format_opt,
+      --   }
+      -- end,
       formatters_by_ft = {
+        -- Adicionando bash com shfmt
+        bash = { 'shfmt' },
+        sh = { 'shfmt' },
+        zsh = { 'shfmt' },
+        hcl = { 'terraform_fmt' }, -- Formatador para Terragrunt (HCL)
         lua = { 'stylua' },
+        -- markdown = { 'prettier' }, -- Adicionando suporte para Markdown
+        terraform = { 'terraformt_fmt' }, -- Formatador para Terraform
+        ['terraform-vars'] = { 'terraform_fmt' }, -- para variaveis
+        -- yaml = { 'prettier', 'yamlfmt' }, -- Formatadores para YAML
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { "ruff_format", "ruff_organize_imports", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+      formatters = {
+        injected = { options = { ignore_errors = true } },
+        shfmt = {
+          prepend_args = { '-i', '2', '-ci', '-bn' },
+        },
       },
     },
   },
@@ -801,27 +912,27 @@ require('lazy').setup({
     },
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is.
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'folke/tokyonight.nvim',
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   config = function()
+  --     ---@diagnostic disable-next-line: missing-fields
+  --     require('tokyonight').setup {
+  --       styles = {
+  --         comments = { italic = false }, -- Disable italics in comments
+  --       },
+  --     }
 
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-    end,
-  },
+  --     -- Load the colorscheme here.
+  --     -- Like many other themes, this one has different styles, and you could load
+  --     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+  --     vim.cmd.colorscheme 'tokyonight-night'
+  --   end,
+  -- },
 
   -- Highlight todo, notes, etc in comments
   {
@@ -877,7 +988,40 @@ require('lazy').setup({
     branch = 'main',
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
-      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local parsers = {
+        'bash',
+        'diff',
+        'dockerfile',
+        'git_config',
+        'git_rebase',
+        'gitcommit',
+        'gitignore',
+        'go',
+        'hcl',
+        'helm',
+        'html',
+        'java',
+        'javascript',
+        'jq',
+        'json',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'passwd',
+        'pem',
+        'python',
+        'query',
+        'regex',
+        'ssh_config',
+        'terraform',
+        'tmux',
+        'toml',
+        'vim',
+        'vimdoc',
+        'yaml',
+        'xml'
+      }
       require('nvim-treesitter').install(parsers)
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
@@ -914,16 +1058,21 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
-  -- require 'kickstart.plugins.lint',
+  require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
-  --
+
+  -- Adicao do diretorio ./lua/kickstart/plugins/*.lua
+  { import = 'kickstart.plugins' },
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
+  -- neo-tree is imported at ./lua/custom/plugins/neo-tree.lua
+  -- tmux-tmux-navigator is configured at ./lua/custom/plugins/nvim-tmux-navigator.lua
+  -- catppuccin theme is configured at ./lua/custom/plugins/catppuccin.lua
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
@@ -950,6 +1099,8 @@ require('lazy').setup({
     },
   },
 })
+
+require("custom.keymaps")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

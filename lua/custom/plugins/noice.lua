@@ -1,0 +1,23 @@
+return {
+  -- O plugin noice.nvim redireciona o cmdline (onde você digita os comandos) para um popup flutuante, escondendo a barra inferior.
+--  {
+--    "folke/noice.nvim",
+--    event = "VeryLazy",
+--    opts = {
+--      better_notifier = { enabled = true },
+--      health = { checker = true },
+--      presets = {
+--        bottom_search = true,    -- Transfere a busca para a linha de baixo
+--        long_message_to_split = true,
+--      },
+--    },
+--    dependencies = {
+--      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+--      "MunifTanjim/nui.nvim",
+--      -- OPTIONAL:
+--      --   `nvim-notify` is only needed, if you want to use the notification view.
+--      --   If not available, we use `mini` as the fallback
+--      "rcarriga/nvim-notify",
+--    }
+--  }
+}
