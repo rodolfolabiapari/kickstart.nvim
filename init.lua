@@ -713,6 +713,53 @@ require('lazy').setup({
             Lua = {},
           },
         },
+        -- Adicoes minhas ao LSP
+        bashls = {},
+        jsonls = {
+          settings = {
+            json = {
+              -- Esta desabilitado pois estou usando o plugin b0o/schemastore.nvim
+              schemas = require('schemastore').json.schemas(),
+              validate = { enable = true },
+            },
+          },
+        },
+        -- Corretor Ortográfico baseado em Java
+        -- :LspStop ltex
+        -- :LspStart ltex
+        -- ltex = {
+        --   settings = {
+        --     ltex = {
+        --       autostart = false,
+        --       -- Idioma padrao
+        --       language = "en-US",
+        --       -- Ativa o suporte também para Português e Inglês simultaneamente
+        --       additionalRules = {
+        --         enablePickyRules = true,
+        --         motherTongue = "pt-BR",
+        --       },
+        --       dictionary = {
+        --         ["en-US"] = { "Kubernetes", "K8s", "Terraform", "Terragrunt", "SRE", "DevOps", "Helm" },
+        --         ["pt-BR"] = { "infraestrutura", "automação", "provisionamento" },
+        --       },
+        --     },
+        --   },
+        -- },
+        marksman = {},
+        terraformls = {},
+        tflint = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              schemaStore = {
+                -- Esta desabilitado pois estou usando o plugin b0o/schemastore.nvim
+                enable = false,
+                url = "",
+              },
+              schemas = require('schemastore').yaml.schemas(),
+            },
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed

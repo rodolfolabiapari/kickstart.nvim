@@ -1,4 +1,5 @@
 -- Configura rastros para localização em arquivos yaml
+-- breadcrumbs
 -- https://github.com/JFryy/keytrail.nvim
 -- comandos
 -- :KeyTrail <path>
