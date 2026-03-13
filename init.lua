@@ -102,21 +102,21 @@ vim.g.have_nerd_font = true
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
-vim.opt.relativenumber = true
-vim.opt.expandtab = true
-vim.opt.softtabstop = 2
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.o.relativenumber = true
+vim.o.expandtab = true
+vim.o.softtabstop = 2
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
 
 -- Enable wrap inside vim and breaks between words
 -- somente para modo VISUAL
-vim.opt.wrap = true
-vim.opt.linebreak = true
+vim.o.wrap = true
+vim.o.linebreak = true
 
 -- Garanta que textwidth esteja definido para o tipo de arquivo
 -- Utilizado quando, em modo v, apertamos `gw` para quebrar linhas
 -- automaticamente
-vim.opt.textwidth = 120
+vim.o.textwidth = 120
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -144,7 +144,7 @@ vim.o.smartcase = true
 vim.o.signcolumn = 'yes'
 
 -- Set 80st column character line vertical
-vim.opt.colorcolumn = '80,120'
+vim.o.colorcolumn = '80,120'
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -160,12 +160,12 @@ vim.o.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 --
---  Notice listchars is set using `vim.opt` instead of `vim.o`.
+--  Notice listchars is set using `vim.o` instead of `vim.o`.
 --  It is very similar to `vim.o` but offers an interface for conveniently interacting with tables.
 --   See `:help lua-options`
 --   and `:help lua-guide-options`
 vim.o.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.o.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.o.inccommand = 'split'
@@ -346,7 +346,7 @@ require('lazy').setup({
       spec = {
         { '<leader>s', group = '[S]earch', mode = { 'n', 'v' } },
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
         { 'gr', group = 'LSP Actions', mode = { 'n' } },
       },
     },
@@ -559,9 +559,6 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
-
-      -- Allows extra capabilities provided by blink.cmp
-      'saghen/blink.cmp',
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -1112,7 +1109,7 @@ require('lazy').setup({
   require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommended keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
