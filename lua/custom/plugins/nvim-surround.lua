@@ -1,10 +1,13 @@
 -- Configuração padrão é robusta, mas pode ser personalizada aqui.
 -- As principais teclas sao ys, ds, e cs
+-- :h nvim-surround.usage
+-- :h nvim-surround.basics
 
 -- Exemplo de uso:
--- 'ysiw"' -> adiciona aspas duplas ao redor da palavra.
--- 'ds"'   -> deleta aspas duplas ao redor.
--- 'cs"''  -> altera aspas duplas para simples.
+-- 'ysiw"' : you surround     -> adiciona aspas duplas ao redor da palavra.
+-- 'ds"'   : delete surround  -> deleta aspas duplas ao redor.
+-- 'cs"''  : change surround  -> altera aspas duplas para simples.
+-- no instert mode: <C-g>s
 
 --     Old text                    Command         New text
 -- --------------------------------------------------------------------------------

@@ -10,7 +10,7 @@ return {
     lint.linters_by_ft = {
       dockerfile = { "hadolint" },
       json = { "jsonlint" },
-      markdown = { "vale" },
+      -- markdown = { "vale" },
       terraform = { "tflint" },
       text = { "vale" }
     }
